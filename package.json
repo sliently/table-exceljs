@@ -2,11 +2,12 @@
   "name": "table-exceljs",
   "version": "1.0.0",
   "description": "table exceljs",
-  "main": "dist/es/index.js",
+  "module": "dist/es/index.js",
   "scripts": {
     "start": "rollup -c rollup.config.ts --watch --configPlugin @rollup/plugin-typescript",
     "build": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepare": "husky"
   },
   "keywords": [
@@ -16,12 +17,19 @@
   "author": "silently",
   "license": "ISC",
   "devDependencies": {
+    "@antfu/eslint-config": "^2.23.2",
+    "@rollup/plugin-eslint": "^9.0.5",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/lodash-es": "^4.17.12",
+    "eslint": "^9.8.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "husky": "^9.1.3",
     "lint-staged": "^15.2.7",
+    "prettier": "^3.3.3",
     "rollup": "^4.19.0"
   },
   "dependencies": {
-    "@rollup/plugin-typescript": "^11.1.6",
+    "lodash-es": "^4.17.21",
     "tslib": "^2.6.3",
     "typescript": "^5.5.4"
   },
