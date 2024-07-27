@@ -1,0 +1,30 @@
+{
+  "name": "table-exceljs",
+  "version": "1.0.0",
+  "description": "table exceljs",
+  "main": "dist/es/index.js",
+  "scripts": {
+    "build": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "keywords": [
+    "table",
+    "exceljs"
+  ],
+  "author": "silently",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^9.1.3",
+    "lint-staged": "^15.2.7",
+    "rollup": "^4.19.0"
+  },
+  "dependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  }
+}
