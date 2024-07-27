@@ -1,9 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
     "strict": true,
     "declaration": true /* 生成相关的 '.d.ts' 文件。 */,
-    "declarationDir": "./dist/types" /* '.d.ts' 文件输出目录 */
+    "declarationDir": "./dist/types" /* '.d.ts' 文件输出目录 */,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "es2015", "es2016", "es2017", "es2018", "es2019", "es2020"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    // Enhance strictness.
+    "noImplicitReturns": true,
+    "noUnusedLocals": true
   },
   "include": ["src"]
 }
