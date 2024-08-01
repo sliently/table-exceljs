@@ -1,8 +1,70 @@
-import { describe, expect, test } from '@jest/globals';
+// 测试
 import { tableToExcel } from './index';
 
-describe('sum module', () => {
-  test('adds 1 + 2 to equal 3', () => {
-    expect(tableToExcel({ a: '12' }, 'a')).toBe('12');
-  });
+test('test', () => {
+  tableToExcel([
+    {
+      sheet: {
+        name: 'test',
+        header: ['姓名1231232', '年龄'],
+        columns: [
+          {
+            title: '姓名',
+            width: 50,
+            dataIndex: 'name',
+            children: [
+              {
+                title: '姓名1',
+                dataIndex: 'name1',
+              },
+              {
+                title: '姓名1',
+                dataIndex: 'name1',
+              },
+              {
+                title: '姓名2',
+                dataIndex: 'name2',
+              },
+            ],
+          },
+          {
+            title: '姓名2',
+            dataIndex: 'name2',
+            children: [
+              {
+                title: '姓名1',
+                dataIndex: 'name1',
+              },
+              {
+                title: '姓名2',
+                dataIndex: 'name2',
+              },
+            ],
+          },
+        ],
+      },
+      source: [
+        {
+          name: 'test',
+          name2: 'test2',
+        },
+        {
+          name: 'test',
+          name2: 'test2',
+        },
+      ],
+      options: {
+        onRow(row, index) {
+          if (index === 0) {
+            return {
+              height: 100,
+            };
+          }
+          return {
+            height: 50,
+          };
+        },
+      },
+    },
+  ]);
 });
