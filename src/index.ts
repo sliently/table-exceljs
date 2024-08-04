@@ -1,27 +1,20 @@
 import excel from 'exceljs';
 import { createSheet, Sheet } from './sheet';
 
-interface ITableToExcel<P = unknown> {
-  sheet: Sheet<P>;
-  source: P[];
+export const tableToExcel = <P>(
+  sheet: Sheet<P>,
+  sources: Array<P>,
   options?: {
-    onRow: (
-      row: P,
-      index: number
-    ) => {
-      height: number;
-    };
-  };
-}
-
-export const tableToExcel = (list: ITableToExcel[]) => {
+    filename?: string;
+  }
+) => {
+  const { filename } = options ?? {};
   // 创建excel
   const wb = new excel.Workbook();
-  list.forEach((item) => {
-    const { sheet, source, options } = item;
-    createSheet(wb, sheet, source, options);
-  });
-
-  wb.xlsx.writeFile('output.xlsx');
-  return wb;
+  createSheet(wb, sheet, sources);
+  if (filename) {
+    wb.xlsx.writeFile(`${filename}.xlsx`);
+    return wb;
+  }
+  return wb.xlsx.writeBuffer();
 };

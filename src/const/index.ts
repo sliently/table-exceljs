@@ -31,4 +31,5 @@ export const columnKey = [
  * @param index
  * @returns
  */
-export const getColumnKey = (x: number, y: number) => `${columnKey[x]}${y + 1}`;
+export const getColumnKey = (col: number, row: number) =>
+  `${columnKey[col - 1]}${row}`;
