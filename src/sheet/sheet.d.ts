@@ -34,7 +34,7 @@ export interface ColumnProps<P> {
   numFmt?: string | boolean;
   style?: Partial<Style>;
   render?: (value: any, record: P, index: number) => unknown;
-  multiple?: boolean; // 合并列
+  multiple?: 'row'; // 合并列
   children?: ColumnProps<P>[];
 }
 

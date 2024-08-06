@@ -30,5 +30,5 @@ export const createSheet = <P>(
   let rowIdx = 0;
   rowIdx = createSheetHeader(ws, header, colWidth);
   rowIdx = createTableColumn(ws, rowIdx + 1, sheet.columns);
-  createTableSource(ws, rowIdx + 1, sheet.columns, sources);
+  createTableSource(ws, rowIdx + 1, 1, sheet.columns, sources);
 };

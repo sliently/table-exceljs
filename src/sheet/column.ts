@@ -2,7 +2,7 @@ import { Worksheet } from 'exceljs';
 import { ColumnProps } from './sheet';
 import { sheetCell } from './cell';
 import { getColumnKey } from '../const';
-import { get } from 'lodash-es';
+import { get, max } from 'lodash-es';
 /**
  * 设置column
  * @param ws
@@ -107,25 +107,61 @@ const setColumnValue = <P>(
 export const createTableSource = <P>(
   ws: Worksheet,
   row: number,
+  col: number,
   columns: ColumnProps<P>[],
   source: Array<P>
 ) => {
   let _row = row;
+  // 跨行
+  const multipleColumn = columns.filter((item) => item.multiple === 'row');
 
   source.forEach((item, idx) => {
-    let colIdx = 1;
+    let colIdx = col;
+    let lastRow = 0;
+    const rowMaxLength =
+      max(
+        multipleColumn.map(
+          (itemCol) => get(item ?? {}, itemCol.dataIndex, []).length
+        )
+      ) ?? 0;
+
     columns.forEach((column) => {
+      // 有子项
       if (column.children) {
-        column.children.forEach((child) => {
-          setColumnValue(ws, child, _row, colIdx, item, idx);
-          colIdx += 1;
-        });
+        // 跨行
+        if (column.multiple === 'row') {
+          //
+          lastRow = createTableSource(
+            ws,
+            _row,
+            colIdx,
+            column.children,
+            get(item, column.dataIndex, [] as any)
+          );
+          colIdx += column.children.length;
+        } else {
+          // 合并表头
+          column.children.forEach((child) => {
+            setColumnValue(ws, child, _row, colIdx, item, idx);
+            colIdx += 1;
+          });
+        }
       } else {
         setColumnValue(ws, column, _row, colIdx, item, idx);
+        if (rowMaxLength !== 0) {
+          ws.mergeCells(
+            `${getColumnKey(colIdx, _row)}:${getColumnKey(colIdx, _row + rowMaxLength - 1)}`
+          );
+        }
+
         colIdx += 1;
       }
     });
-    _row += 1;
+    if (lastRow) {
+      _row = lastRow;
+    } else {
+      _row += 1;
+    }
   });
 
   return _row;
